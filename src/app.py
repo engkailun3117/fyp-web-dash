@@ -1,8 +1,11 @@
+from flask import Flask  
 from dash import Dash, dcc, Output, Input, State, html
 import dash_bootstrap_components as dbc
 from dash import dash_table
 import pandas as pd
 
+# Define Flask application instance
+server = Flask(__name__)
 
 # Load Data
 path = 'DNNresults.csv'
@@ -13,9 +16,11 @@ df['Month'] = df['Month'].dt.strftime('%Y/%m')  # Format Month column as 'YYYY/M
 df2 = df[['Month','Date','Country','Gateway','Telco','Shortcode','Keyword','Offer ID','Affiliate ID',
           'Total Sales','ECPA','Day 1','Week 1','Month 3 (P)','Month 4 (P)','Month 5 (P)','Month 6 (P)']]
 
+app =server
+
 # Dash components
 app = Dash(__name__, external_stylesheets=[dbc.themes.LUX])
-server = app.server
+
 
 # Function to filter data based on user selections
 def filter_data(df, month, date, country, gateway, telco, shortcode, keyword, offer_id, affiliate_id):
