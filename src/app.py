@@ -13,7 +13,7 @@ data = pd.read_csv(path)
 df = pd.DataFrame(data)
 df['Month'] = pd.to_datetime(df['Month'])  # Convert Month column to datetime
 df['Month'] = df['Month'].dt.strftime('%Y/%m')  # Format Month column as 'YYYY/MM'
-df2 = df[['Month','Date','Country','Gateway','Telco','Shortcode','Keyword','Offer ID','Affiliate ID',
+df2 = df[['Month','Date','Country','New_Gateway','Telco','Shortcode','Keyword','Offer_ID','Affiliate_ID',
           'Total Sales','ECPA','Day 1','Week 1','Month 3 (P)','Month 4 (P)','Month 5 (P)','Month 6 (P)']]
 
 #app =server
@@ -32,7 +32,7 @@ def filter_data(df, month, date, country, gateway, telco, shortcode, keyword, of
     if country:
         filtered_df = filtered_df[filtered_df['Country'] == country]
     if gateway:
-        filtered_df = filtered_df[filtered_df['Gateway'] == gateway]
+        filtered_df = filtered_df[filtered_df['New_Gateway'] == gateway]
     if telco:
         filtered_df = filtered_df[filtered_df['Telco'] == telco]
     if shortcode:
@@ -40,9 +40,9 @@ def filter_data(df, month, date, country, gateway, telco, shortcode, keyword, of
     if keyword:
         filtered_df = filtered_df[filtered_df['Keyword'] == keyword]
     if offer_id:
-        filtered_df = filtered_df[filtered_df['Offer ID'] == offer_id]
+        filtered_df = filtered_df[filtered_df['Offer_ID'] == offer_id]
     if affiliate_id:
-        filtered_df = filtered_df[filtered_df['Affiliate ID'] == affiliate_id]
+        filtered_df = filtered_df[filtered_df['Affiliate_ID'] == affiliate_id]
     return filtered_df
 
 # Dash layout
@@ -241,7 +241,7 @@ def update_country_dropdown(month, date):
 )
 def update_gateway_dropdown(month, date, country):
     if month and date and country:
-        options = [{'label':gateway, 'value': gateway} for gateway in df2[(df2['Month'] == month) & (df2['Date'] == date) & (df2['Country'] == country)]['Gateway'].unique()]
+        options = [{'label':gateway, 'value': gateway} for gateway in df2[(df2['Month'] == month) & (df2['Date'] == date) & (df2['Country'] == country)]['New_Gateway'].unique()]
     else:
         options = []
     return options
@@ -256,7 +256,7 @@ def update_gateway_dropdown(month, date, country):
 )
 def update_telco_dropdown(month, date, country, gateway):
     if month and date and country and gateway:
-        options = [{'label': telco, 'value': telco} for telco in df2[(df2['Month'] == month) & (df2['Date'] == date) & (df2['Country'] == country) & (df2['Gateway'] == gateway)]['Telco'].unique()]
+        options = [{'label': telco, 'value': telco} for telco in df2[(df2['Month'] == month) & (df2['Date'] == date) & (df2['Country'] == country) & (df2['New_Gateway'] == gateway)]['Telco'].unique()]
     else:
         options = []
     return options
@@ -272,7 +272,7 @@ def update_telco_dropdown(month, date, country, gateway):
 )
 def update_shortcode_dropdown(month, date, country, gateway, telco):
     if month and date and country and gateway and telco:
-        options = [{'label': shortcode, 'value': shortcode} for shortcode in df2[(df2['Month'] == month) & (df2['Date'] == date) & (df2['Country'] == country) & (df2['Gateway'] == gateway) & (df2['Telco'] == telco)]['Shortcode'].unique()]
+        options = [{'label': shortcode, 'value': shortcode} for shortcode in df2[(df2['Month'] == month) & (df2['Date'] == date) & (df2['Country'] == country) & (df2['New_Gateway'] == gateway) & (df2['Telco'] == telco)]['Shortcode'].unique()]
     else:
         options = []
     return options
@@ -290,7 +290,7 @@ def update_shortcode_dropdown(month, date, country, gateway, telco):
 )
 def update_keyword_dropdown(month, date, country, gateway, telco, shortcode):
     if month and date and country and gateway and telco and shortcode:
-        options =[{'label': keyword, 'value': keyword} for keyword in df2[(df2['Month'] == month) & (df2['Date'] == date) & (df2['Country'] == country) & (df2['Gateway'] == gateway) & (df2['Telco'] == telco) & (df2['Shortcode'] == shortcode)]['Keyword'].unique()]
+        options =[{'label': keyword, 'value': keyword} for keyword in df2[(df2['Month'] == month) & (df2['Date'] == date) & (df2['Country'] == country) & (df2['New_Gateway'] == gateway) & (df2['Telco'] == telco) & (df2['Shortcode'] == shortcode)]['Keyword'].unique()]
     else:
         options = []
     return options
@@ -308,7 +308,7 @@ def update_keyword_dropdown(month, date, country, gateway, telco, shortcode):
 )
 def update_offer_id_dropdown(month, date, country, gateway, telco, shortcode, keyword):
     if month and date and country and gateway and telco and shortcode and keyword:
-        options = [{'label': offer_id, 'value': offer_id} for offer_id in df2[(df2['Month'] == month) & (df2['Date'] == date) & (df2['Country'] == country) & (df2['Gateway'] == gateway) & (df2['Telco'] == telco) & (df2['Shortcode'] == shortcode) & (df2['Keyword'] == keyword)]['Offer ID'].unique()]
+        options = [{'label': offer_id, 'value': offer_id} for offer_id in df2[(df2['Month'] == month) & (df2['Date'] == date) & (df2['Country'] == country) & (df2['New_Gateway'] == gateway) & (df2['Telco'] == telco) & (df2['Shortcode'] == shortcode) & (df2['Keyword'] == keyword)]['Offer_ID'].unique()]
     else:
         options = []
     return options
@@ -327,7 +327,7 @@ def update_offer_id_dropdown(month, date, country, gateway, telco, shortcode, ke
 )
 def update_affiliate_id_dropdown(month, date, country, gateway, telco, shortcode, keyword, offer_id):
     if month and date and country and gateway and telco and shortcode and keyword and offer_id:
-        options = [{'label': affiliate_id, 'value': affiliate_id} for affiliate_id in df2[(df2['Month'] == month) & (df2['Date'] == date) & (df2['Country'] == country) & (df2['Gateway'] == gateway) & (df2['Telco'] == telco) & (df2['Shortcode'] == shortcode) & (df2['Keyword'] == keyword) & (df2['Offer ID'] == offer_id)]['Affiliate ID'].unique()]
+        options = [{'label': affiliate_id, 'value': affiliate_id} for affiliate_id in df2[(df2['Month'] == month) & (df2['Date'] == date) & (df2['Country'] == country) & (df2['New_Gateway'] == gateway) & (df2['Telco'] == telco) & (df2['Shortcode'] == shortcode) & (df2['Keyword'] == keyword) & (df2['Offer_ID'] == offer_id)]['Affiliate_ID'].unique()]
     else:
         options = []
     return options
